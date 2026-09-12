@@ -1,6 +1,6 @@
 # BOB Portfolio
 
-React + Vite をフロントエンド、Node.js + Express をバックエンドとして作るポートフォリオサイトの最初の土台です。
+Reactをフロントエンド、Node.jsとExpressをバックエンド、Notionをデータベースとして作成したポートフォリオです。
 
 ## 起動
 
@@ -11,8 +11,6 @@ cd backend
 npm install
 npm start
 ```
-
-http://localhost:3000/api/health
 
 ### 2. Frontend
 
@@ -26,5 +24,4 @@ npm run dev
 
 http://localhost:5173
 
-現在はNotion APIには接続していません。
-次の段階でExpressからNotion APIへ接続し、経歴・制作物をNotionから取得します。
+　Notionの内容を変更すると自動的にポートフォリオサイトが変わるようになっています。これにより、非常に簡単に内容をアップデートすることが可能です。
