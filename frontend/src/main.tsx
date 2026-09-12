@@ -56,7 +56,7 @@ function Home() {
   const [careerError, setCareerError] = React.useState(false);
 
   React.useEffect(() => {
-    fetch("http://localhost:3000/api/projects")
+    fetch("api/projects")
       .then((response) => {
         if (!response.ok) {
           throw new Error("制作物の取得に失敗しました");
@@ -76,7 +76,7 @@ function Home() {
   }, []);
 
   React.useEffect(() => {
-  fetch("http://localhost:3000/api/career")
+  fetch("api/career")
     .then((response) => {
       if (!response.ok) {
         throw new Error("経歴の取得に失敗しました");
@@ -263,7 +263,7 @@ function ProjectDetail() {
       return;
     }
 
-    fetch("http://localhost:3000/api/projects/" + id)
+    fetch("api/projects/" + id)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Project not found");
