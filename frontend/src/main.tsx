@@ -7,45 +7,110 @@ type Project = {
   title: string;
   shortDescription: string;
   description: string;
+  development: string;
   period: string;
   team: string;
   role: string;
   technologies: string[];
+  imageUrl: string;
 };
 
-const projects:Project[]=[
-{id:"mahjong-battle",title:"Mahjong Battle",shortDescription:"UnityとCloud Firestoreを使用して制作した2D麻雀ゲーム。",description:"4人チームで制作した2D麻雀ゲームです。オンラインでプレイヤー同士が対戦できるゲームを目標として開発しました。",period:"2025年",team:"4人",role:"プログラミング・ゲームシステム実装",technologies:["Unity","C#","Cloud Firestore"]},
-{id:"sample-game",title:"Sample Game",shortDescription:"ゲーム開発の学習・制作を通して作成したサンプルゲーム。",description:"ゲームプログラミングの学習過程で制作したゲームです。今後、詳細な内容を追加していく予定です。",period:"2026年",team:"個人制作",role:"企画・プログラミング",technologies:["Unity","C#"]}
-];
+type Career = {
+  title: string;
+  date: string;
+  category: string[];
+  sortOrder: number;
+  description: string;
+};
 
-function Layout({children}:{children:React.ReactNode}){return <><header className="site-header"><a href="/" className="logo">BOB Portfolio</a><nav><a href="/">Home</a><a href="/#projects">Projects</a><a href="/#career">Career</a></nav></header>{children}<footer>© 2026 BOB</footer></>}
+function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      <header className="site-header">
+        <a href="/" className="logo">
+          BOB Portfolio
+        </a>
+
+        <nav>
+          <a href="/">Home</a>
+          <a href="/#projects">Projects</a>
+          <a href="/#career">Career</a>
+        </nav>
+      </header>
+
+      {children}
+
+      <footer>© 2026 BOB</footer>
+    </>
+  );
+}
 
 function Home() {
   const [projects, setProjects] = React.useState<Project[]>([]);
+  const [career, setCareer] = React.useState<Career[]>([]);
+
   const [loading, setLoading] = React.useState(true);
+  const [careerLoading, setCareerLoading] = React.useState(true);
+
+  const [error, setError] = React.useState(false);
+  const [careerError, setCareerError] = React.useState(false);
 
   React.useEffect(() => {
     fetch("http://localhost:3000/api/projects")
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("制作物の取得に失敗しました");
+        }
+
+        return response.json();
+      })
       .then((data) => {
-        setProjects(data);
+        setProjects(data.projects);
         setLoading(false);
       })
       .catch((error) => {
         console.error("制作物の取得に失敗しました:", error);
+        setError(true);
         setLoading(false);
       });
   }, []);
+
+  React.useEffect(() => {
+  fetch("http://localhost:3000/api/career")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("経歴の取得に失敗しました");
+      }
+
+      return response.json();
+    })
+    .then((data) => {
+      setCareer(data.career);
+      setCareerLoading(false);
+    })
+    .catch((error) => {
+      console.error("経歴の取得に失敗しました:", error);
+      setCareerError(true);
+      setCareerLoading(false);
+    });
+}, []);
 
   return (
     <Layout>
       <header className="hero">
         <div className="hero-inner">
-          <div className="profile-icon">BOB</div>
+          <div className="profile-icon">
+            BOB
+          </div>
 
           <div>
-            <p className="eyebrow">PORTFOLIO</p>
-            <h1>BOB</h1>
+            <p className="eyebrow">
+              PORTFOLIO
+            </p>
+
+            <h1>
+              BOB
+            </h1>
 
             <p className="lead">
               ゲームプログラマーを目指して、
@@ -57,7 +122,9 @@ function Home() {
 
       <main>
         <section>
-          <h2>自己紹介</h2>
+          <h2>
+            自己紹介
+          </h2>
 
           <p>
             Unityを中心にゲーム開発を行っています。
@@ -67,46 +134,102 @@ function Home() {
         </section>
 
         <section id="career">
-          <h2>経歴</h2>
+  <h2>
+    経歴
+  </h2>
 
-          <div className="timeline">
-            <article>
-              <strong>2024</strong>
-              <div>福岡工業大学短期大学部 入学</div>
-            </article>
+  {careerLoading && (
+    <p>
+      経歴を読み込んでいます...
+    </p>
+  )}
 
-            <article>
-              <strong>2025</strong>
-              <div>
-                ゲーム開発・プログラミング制作などに取り組む
-              </div>
-            </article>
+  {careerError && (
+    <p>
+      経歴の読み込みに失敗しました。
+    </p>
+  )}
 
-            <article>
-              <strong>2026</strong>
-              <div>鹿児島大学への編入学が決定</div>
-            </article>
+  {!careerLoading && !careerError && career.length === 0 && (
+    <p>
+      経歴がありません。
+    </p>
+  )}
+
+  {!careerLoading && !careerError && career.length > 0 && (
+    <div className="timeline">
+      {career.map((item) => (
+        <article key={item.sortOrder}>
+          <strong>
+            {item.date.slice(0, 4)}
+          </strong>
+
+          <div>
+            <h3>
+              {item.title}
+            </h3>
+
+            {item.category.length > 0 && (
+              <small>
+                {item.category.join(" / ")}
+              </small>
+            )}
+
+            <p>
+              {item.description}
+            </p>
           </div>
-        </section>
+        </article>
+      ))}
+    </div>
+  )}
+</section>
 
         <section id="projects">
-          <h2>制作物</h2>
+          <h2>
+            制作物
+          </h2>
 
-          {loading ? (
-            <p>制作物を読み込んでいます...</p>
-          ) : (
+          {loading && (
+            <p>
+              制作物を読み込んでいます...
+            </p>
+          )}
+
+          {error && (
+            <p>
+              制作物の読み込みに失敗しました。
+            </p>
+          )}
+
+          {!loading && !error && projects.length === 0 && (
+            <p>
+              制作物がありません。
+            </p>
+          )}
+
+          {!loading && !error && projects.length > 0 && (
             <div className="projects">
               {projects.map((project) => (
                 <a
-                  className="project-card"
-                  href={`/projects/${project.id}`}
-                  key={project.id}
+                className="project-card"
+                href={"/projects/" + project.id}
+                key={project.id}
                 >
                   <div className="project-image">
-                    GAME
-                  </div>
+  {project.imageUrl ? (
+    <img
+      src={project.imageUrl}
+      alt={project.title}
+    />
+  ) : (
+    <span>NO IMAGE</span>
+  )}
+</div>
 
-                  <h3>{project.title}</h3>
+                  <h3>
+                    {project.title}
+                  </h3>
 
                   <p>
                     {project.shortDescription}
@@ -134,7 +257,13 @@ function ProjectDetail() {
   const [error, setError] = React.useState(false);
 
   React.useEffect(() => {
-    fetch(`http://localhost:3000/api/projects/${id}`)
+    if (!id) {
+      setError(true);
+      setLoading(false);
+      return;
+    }
+
+    fetch("http://localhost:3000/api/projects/" + id)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Project not found");
@@ -147,7 +276,7 @@ function ProjectDetail() {
         setLoading(false);
       })
       .catch((error) => {
-        console.error(error);
+        console.error("制作物の取得に失敗しました:", error);
         setError(true);
         setLoading(false);
       });
@@ -157,7 +286,9 @@ function ProjectDetail() {
     return (
       <Layout>
         <main>
-          <p>読み込んでいます...</p>
+          <p>
+            読み込んでいます...
+          </p>
         </main>
       </Layout>
     );
@@ -167,9 +298,17 @@ function ProjectDetail() {
     return (
       <Layout>
         <main className="not-found">
-          <h1>404</h1>
-          <p>指定された制作物が見つかりません。</p>
-          <a href="/">トップページへ戻る</a>
+          <h1>
+            404
+          </h1>
+
+          <p>
+            指定された制作物が見つかりません。
+          </p>
+
+          <a href="/">
+            トップページへ戻る
+          </a>
         </main>
       </Layout>
     );
@@ -178,19 +317,33 @@ function ProjectDetail() {
   return (
     <Layout>
       <main className="detail-page">
-        <a href="/#projects" className="back-link">
+        <a
+          href="/#projects"
+          className="back-link"
+        >
           ← 制作物一覧に戻る
         </a>
 
         <div className="detail-hero">
           <div className="detail-image">
-            GAME
-          </div>
+  {project.imageUrl ? (
+    <img
+      src={project.imageUrl}
+      alt={project.title}
+    />
+  ) : (
+    <span>NO IMAGE</span>
+  )}
+</div>
 
           <div>
-            <p className="eyebrow">PROJECT</p>
+            <p className="eyebrow">
+              PROJECT
+            </p>
 
-            <h1>{project.title}</h1>
+            <h1>
+              {project.title}
+            </h1>
 
             <p className="lead">
               {project.shortDescription}
@@ -199,7 +352,9 @@ function ProjectDetail() {
         </div>
 
         <section>
-          <h2>概要</h2>
+          <h2>
+            概要
+          </h2>
 
           <p className="detail-text">
             {project.description}
@@ -207,26 +362,46 @@ function ProjectDetail() {
         </section>
 
         <section>
-          <h2>制作情報</h2>
+          <h2>
+            制作情報
+          </h2>
 
           <dl className="info-list">
             <div>
-              <dt>制作期間</dt>
-              <dd>{project.period}</dd>
+              <dt>
+                制作期間
+              </dt>
+
+              <dd>
+                {project.period}
+              </dd>
             </div>
 
             <div>
-              <dt>チーム</dt>
-              <dd>{project.team}</dd>
+              <dt>
+                チーム
+              </dt>
+
+              <dd>
+                {project.team}
+              </dd>
             </div>
 
             <div>
-              <dt>担当</dt>
-              <dd>{project.role}</dd>
+              <dt>
+                担当
+              </dt>
+
+              <dd>
+                {project.role}
+              </dd>
             </div>
 
             <div>
-              <dt>使用技術</dt>
+              <dt>
+                使用技術
+              </dt>
+
               <dd>
                 {project.technologies.join(" / ")}
               </dd>
@@ -235,21 +410,26 @@ function ProjectDetail() {
         </section>
 
         <section>
-          <h2>開発について</h2>
+          <h2>
+            開発について
+          </h2>
 
           <p className="detail-text">
-            ここに開発中に工夫した点、苦労した点、
-            担当した機能などを追加できます。
+            {project.development}
           </p>
         </section>
 
-        <a href="/#projects" className="back-button">
+        <a
+          href="/#projects"
+          className="back-button"
+        >
           制作物一覧に戻る
         </a>
       </main>
     </Layout>
   );
 }
+
 function App() {
   const path = window.location.pathname;
 
@@ -259,4 +439,11 @@ function App() {
 
   return <Home />;
 }
-ReactDOM.createRoot(document.getElementById("root")!).render(<React.StrictMode><App/></React.StrictMode>);
+
+ReactDOM.createRoot(
+  document.getElementById("root")!
+).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
