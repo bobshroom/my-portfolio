@@ -3064,7 +3064,9 @@ const worker = {
             shortDescription: properties.ShortDescription?.rich_text?.[0]?.plain_text ?? "",
             description: properties.Description?.rich_text?.[0]?.plain_text ?? "",
             development: properties.Development?.rich_text?.[0]?.plain_text ?? "",
-            period: properties.Period?.rich_text?.[0]?.plain_text ?? "",
+            startDate: properties.StartDate?.date?.start ?? "",
+            endDate: properties.EndDate?.date?.start ?? "",
+            updatedDate: properties.UpdatedDate?.date?.start ?? "",
             team: properties.Team?.rich_text?.[0]?.plain_text ?? "",
             role: properties.Role?.rich_text?.[0]?.plain_text ?? "",
             technologies: properties.Technologies?.multi_select?.map(
@@ -3106,7 +3108,9 @@ const worker = {
           shortDescription: properties.ShortDescription?.rich_text?.[0]?.plain_text ?? "",
           description: properties.Description?.rich_text?.[0]?.plain_text ?? "",
           development: properties.Development?.rich_text?.[0]?.plain_text ?? "",
-          period: properties.Period?.rich_text?.[0]?.plain_text ?? "",
+          startDate: properties.StartDate?.date?.start ?? "",
+          endDate: properties.EndDate?.date?.start ?? "",
+          updatedDate: properties.UpdatedDate?.date?.start ?? "",
           team: properties.Team?.rich_text?.[0]?.plain_text ?? "",
           role: properties.Role?.rich_text?.[0]?.plain_text ?? "",
           technologies: properties.Technologies?.multi_select?.map(

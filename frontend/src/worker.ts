@@ -38,8 +38,12 @@ export default {
                 properties.Description?.rich_text?.[0]?.plain_text ?? "",
               development:
                 properties.Development?.rich_text?.[0]?.plain_text ?? "",
-              period:
-                properties.Period?.rich_text?.[0]?.plain_text ?? "",
+              startDate:
+                properties.StartDate?.date?.start ?? "",
+              endDate:
+                properties.EndDate?.date?.start ?? "",
+              updatedDate:
+                properties.UpdatedDate?.date?.start ?? "",
               team:
                 properties.Team?.rich_text?.[0]?.plain_text ?? "",
               role:
@@ -105,8 +109,12 @@ export default {
             properties.Description?.rich_text?.[0]?.plain_text ?? "",
           development:
             properties.Development?.rich_text?.[0]?.plain_text ?? "",
-          period:
-            properties.Period?.rich_text?.[0]?.plain_text ?? "",
+          startDate:
+            properties.StartDate?.date?.start ?? "",
+          endDate:
+            properties.EndDate?.date?.start ?? "",
+          updatedDate:
+            properties.UpdatedDate?.date?.start ?? "",
           team:
             properties.Team?.rich_text?.[0]?.plain_text ?? "",
           role:
