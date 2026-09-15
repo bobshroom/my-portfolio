@@ -17,6 +17,7 @@ type Project = {
   role: string;
   technologies: string[];
   imageUrl: string;
+  sortOrder: number;
 };
 
 type Career = {

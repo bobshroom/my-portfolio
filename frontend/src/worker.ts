@@ -56,6 +56,8 @@ export default {
                 properties.Image?.files?.[0]?.file?.url ??
                 properties.Image?.files?.[0]?.external?.url ??
                 "",
+              sortOrder:
+                properties.SortOrder?.number ?? 0,
               publicUrl:
                 properties.PublicURL?.url ?? null,
 
@@ -64,6 +66,8 @@ export default {
             };
           });
 
+        projects.sort((a, b) => a.sortOrder - b.sortOrder);
+        
         return Response.json({
           ok: true,
           count: projects.length,
