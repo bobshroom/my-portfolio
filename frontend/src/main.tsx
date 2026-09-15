@@ -11,6 +11,8 @@ type Project = {
   startDate: string;
   endDate: string;
   updatedDate: string;
+  publicUrl: string | null;
+  sourceUrl: string | null;
   team: string;
   role: string;
   technologies: string[];
@@ -455,6 +457,35 @@ function ProjectDetail() {
               </dd>
             </div>
           </dl>
+          {project.publicUrl && (
+  <div>
+    <dt>公開サイト</dt>
+    <dd>
+      <a
+        href={project.publicUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        公開サイトを見る
+      </a>
+    </dd>
+  </div>
+)}
+
+{project.sourceUrl && (
+  <div>
+    <dt>ソースコード等</dt>
+    <dd>
+      <a
+        href={project.sourceUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        ソースコードを見る
+      </a>
+    </dd>
+  </div>
+)}
         </section>
 
         <section>

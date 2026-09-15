@@ -3072,7 +3072,9 @@ const worker = {
             technologies: properties.Technologies?.multi_select?.map(
               (item) => item.name
             ) ?? [],
-            imageUrl: properties.Image?.files?.[0]?.file?.url ?? properties.Image?.files?.[0]?.external?.url ?? ""
+            imageUrl: properties.Image?.files?.[0]?.file?.url ?? properties.Image?.files?.[0]?.external?.url ?? "",
+            publicUrl: properties.PublicURL?.url ?? null,
+            sourceUrl: properties.SourceURL?.url ?? null
           };
         });
         return Response.json({
@@ -3116,7 +3118,9 @@ const worker = {
           technologies: properties.Technologies?.multi_select?.map(
             (item) => item.name
           ) ?? [],
-          imageUrl: properties.Image?.files?.[0]?.file?.url ?? properties.Image?.files?.[0]?.external?.url ?? ""
+          imageUrl: properties.Image?.files?.[0]?.file?.url ?? properties.Image?.files?.[0]?.external?.url ?? "",
+          publicUrl: properties.PublicURL?.url ?? null,
+          sourceUrl: properties.SourceURL?.url ?? null
         };
         return Response.json(project);
       }

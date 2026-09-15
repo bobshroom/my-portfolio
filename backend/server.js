@@ -71,6 +71,11 @@ app.get("/api/projects", async (req, res) => {
         properties.Image?.files?.[0]?.external?.url ??
         "",
       
+        publicUrl:
+  properties.PublicURL?.url ?? null,
+
+sourceUrl:
+  properties.SourceURL?.url ?? null,
       
     };
   });
@@ -148,6 +153,12 @@ app.get("/api/projects/:id", async (req, res) => {
     properties.Image?.files?.[0]?.file?.url ??
     properties.Image?.files?.[0]?.external?.url ??
     "",
+  
+    publicUrl:
+  properties.PublicURL?.url ?? null,
+
+sourceUrl:
+  properties.SourceURL?.url ?? null,
 };
 
     res.json(project);

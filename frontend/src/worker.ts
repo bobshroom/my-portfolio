@@ -56,6 +56,11 @@ export default {
                 properties.Image?.files?.[0]?.file?.url ??
                 properties.Image?.files?.[0]?.external?.url ??
                 "",
+              publicUrl:
+                properties.PublicURL?.url ?? null,
+
+              sourceUrl:
+                properties.SourceURL?.url ?? null,
             };
           });
 
@@ -127,6 +132,12 @@ export default {
             properties.Image?.files?.[0]?.file?.url ??
             properties.Image?.files?.[0]?.external?.url ??
             "",
+          
+          publicUrl:
+            properties.PublicURL?.url ?? null,
+
+          sourceUrl:
+            properties.SourceURL?.url ?? null,
         };
 
         return Response.json(project);
