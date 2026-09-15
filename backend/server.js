@@ -49,7 +49,7 @@ app.get("/api/projects", async (req, res) => {
         properties.Development?.rich_text?.[0]?.plain_text ?? "",
 
       period:
-        properties.Period?.rich_text?.[0]?.plain_text ?? "",
+        properties.Period?.date?.start ?? "",
 
       team:
         properties.Team?.rich_text?.[0]?.plain_text ?? "",
@@ -123,7 +123,7 @@ app.get("/api/projects/:id", async (req, res) => {
     properties.Development?.rich_text?.[0]?.plain_text ?? "",
 
   period:
-    properties.Period?.rich_text?.[0]?.plain_text ?? "",
+    properties.Period?.date?.start ?? "",
 
   team:
     properties.Team?.rich_text?.[0]?.plain_text ?? "",
