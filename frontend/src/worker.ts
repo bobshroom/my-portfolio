@@ -1,6 +1,7 @@
 import { Client } from "@notionhq/client";
 
 interface Env {
+  ASSETS: Fetcher;
   NOTION_TOKEN: string;
   NOTION_PROJECTS_DATABASE_ID: string;
   NOTION_CAREER_DATABASE_ID: string;
@@ -162,7 +163,7 @@ export default {
         });
       }
 
-      return new Response("Not Found", { status: 404 });
+      return env.ASSETS.fetch(request);
     } catch (error: any) {
       console.error(error);
 

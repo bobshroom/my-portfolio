@@ -3141,7 +3141,7 @@ const worker = {
           career
         });
       }
-      return new Response("Not Found", { status: 404 });
+      return env.ASSETS.fetch(request);
     } catch (error) {
       console.error(error);
       return Response.json(
