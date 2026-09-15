@@ -48,8 +48,12 @@ app.get("/api/projects", async (req, res) => {
       development:
         properties.Development?.rich_text?.[0]?.plain_text ?? "",
 
-      period:
-        properties.Period?.date?.start ?? "",
+      startDate:
+        properties.StartDate?.date?.start ?? "",
+      endDate:
+        properties.EndDate?.date?.start ?? "",
+      updatedDate:
+        properties.UpdatedDate?.date?.start ?? "",
 
       team:
         properties.Team?.rich_text?.[0]?.plain_text ?? "",
@@ -122,8 +126,12 @@ app.get("/api/projects/:id", async (req, res) => {
   development:
     properties.Development?.rich_text?.[0]?.plain_text ?? "",
 
-  period:
-    properties.Period?.date?.start ?? "",
+  startDate:
+    properties.StartDate?.date?.start ?? "",
+  endDate:
+    properties.EndDate?.date?.start ?? "",
+  updatedDate:
+    properties.UpdatedDate?.date?.start ?? "",
 
   team:
     properties.Team?.rich_text?.[0]?.plain_text ?? "",

@@ -8,7 +8,9 @@ type Project = {
   shortDescription: string;
   description: string;
   development: string;
-  period: string;
+  startDate: string;
+  endDate: string;
+  updatedDate: string;
   team: string;
   role: string;
   technologies: string[];
@@ -248,6 +250,20 @@ function Home() {
   );
 }
 
+function calculatePeriod(startDate: string, endDate: string): string {
+  if (!startDate || !endDate) {
+    return "不明";
+  }
+
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+
+  const diffTime = end.getTime() - start.getTime();
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+
+  return `${diffDays}日`;
+}
+
 function ProjectDetail() {
   const path = window.location.pathname;
   const id = path.split("/")[2];
@@ -368,13 +384,45 @@ function ProjectDetail() {
 
           <dl className="info-list">
             <div>
-              <dt>
-                制作期間
-              </dt>
+              <div>
+                <dt>
+                  制作開始日
+                </dt>
 
-              <dd>
-                {project.period}
-              </dd>
+                <dd>
+                  {project.startDate}
+                </dd>
+              </div>
+
+              <div>
+                <dt>
+                  制作終了日
+                </dt>
+
+                <dd>
+                  {project.endDate}
+                </dd>
+              </div>
+
+              <div>
+                <dt>
+                  制作期間
+                </dt>
+
+                <dd>
+                  {calculatePeriod(project.startDate, project.endDate)}
+                </dd>
+              </div>
+
+              <div>
+                <dt>
+                  最終更新日
+                </dt>
+
+                <dd>
+                  {project.updatedDate}
+                </dd>
+              </div>
             </div>
 
             <div>
